@@ -1,0 +1,39 @@
+# rendered by the builder, not a recorded call (the first prompt uses the real initial positions, the second a stub state)
+# builder: build_magent_prompt in magent.py
+# state: battle_v4 with map_size 20 and max_cycles 100, the first step after reset (12 red, 12 blue);
+#        the positions are read from the environment by get_positions, nothing is recorded
+# call: one user message, no system message, temperature 0.5, max_tokens 60 (LLM_MAX_TOKENS overrides;
+#        the temperature-controlled router runs use 80)
+
+----- user message, step 0 (759 characters) -----
+You are a meta-planner for the RED team in MAgent battle (a multi-agent skirmish).
+Red alive: 12, Blue alive: 12, step: 0/100.
+Red centroid: (3.0, 9.0), Blue centroid: (15.0, 9.0), centroid_dist: 12.0.
+Pick exactly ONE meta-task for the team this phase:
+  ATTACK_FORWARD - move toward nearest enemy and attack adjacent ones (default offensive)
+  HOLD_POSITION  - stay and only attack adjacent enemies (when outnumbering blue locally)
+  SPREAD_OUT     - spread away from allies; attack adjacent enemies (avoid clustering)
+  RETREAT        - hold (a pacifist last resort; rarely useful)
+Heuristic: if red >= blue and dist < 5 → ATTACK_FORWARD; if red < blue → SPREAD_OUT (avoid being surrounded).
+Output ONLY the meta-task token. Example: ATTACK_FORWARD
+Answer:
+
+----- user message, a later step (red 7 alive, blue 12 alive, step 99; positions are the step-0 positions of the survivors) -----
+You are a meta-planner for the RED team in MAgent battle (a multi-agent skirmish).
+Red alive: 7, Blue alive: 12, step: 99/100.
+Red centroid: (1.8571428571428572, 8.571428571428571), Blue centroid: (15.0, 9.0), centroid_dist: 13.1.
+Pick exactly ONE meta-task for the team this phase:
+  ATTACK_FORWARD - move toward nearest enemy and attack adjacent ones (default offensive)
+  HOLD_POSITION  - stay and only attack adjacent enemies (when outnumbering blue locally)
+  SPREAD_OUT     - spread away from allies; attack adjacent enemies (avoid clustering)
+  RETREAT        - hold (a pacifist last resort; rarely useful)
+Heuristic: if red >= blue and dist < 5 → ATTACK_FORWARD; if red < blue → SPREAD_OUT (avoid being surrounded).
+Output ONLY the meta-task token. Example: ATTACK_FORWARD
+Answer:
+
+----- parsing -----
+reply 'ATTACK_FORWARD' -> ATTACK_FORWARD
+reply 'I would hold: HOLD_POSITION' -> HOLD_POSITION
+reply '' -> ATTACK_FORWARD
+reply 'nothing' -> ATTACK_FORWARD
+(the replies above are written by hand to show the parser; with several tokens in a reply the parser takes the first one found in a set, so its order is not fixed)

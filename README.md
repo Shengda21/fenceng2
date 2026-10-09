@@ -37,7 +37,7 @@ one seed list.
 
 `prompts/PROMPTS.md` lists the system instruction for each mode, the user-prompt templates, the encodings of the
 other agents' types, the few-shot format, the sampling settings and how an answer is parsed. `prompts/examples/` holds
-one real prompt for each family and encoding, together with the model's raw completion. The prompts of the single-type slice are not stored with the records, so `PROMPTS.md` documents the HLA transfer as a template only and says where the rest could not be recovered.
+one real prompt for each family and encoding, together with the model's raw completion. `prompts/single_type/` holds the code that builds and parses the prompts of the single-type slice (Hanabi, SMAC, MAgent, Overcooked and the HLA transfer), with one rendered prompt per domain in `prompts/single_type/examples/`. The records of those runs do not store the prompt text, so the examples are rendered by the builders, and `PROMPTS.md` says which parts of the HLA prompt are missing.
 
 ## Environment
 

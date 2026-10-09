@@ -1,14 +1,15 @@
 # Prompts shown to the language-model selectors
 
-This directory collects every prompt that a language-model selector saw in the experiments of the paper. I wrote it so that a reader can check what the models were told, word for word, without running the code. The catalogue below is built from the code that assembles the prompts and from the per-call records in the data archive. `examples/` holds one real prompt, with the model's reply, for each family and encoding.
+This directory collects every prompt that a language-model selector saw in the experiments of the paper. I wrote it so that a reader can check what the models were told, word for word, without running the code. The catalogue below is built from the code that assembles the prompts and from the per-call records in the data archive. `examples/` holds one real prompt, with the model's reply, for each family and encoding. `single_type/` holds the verbatim code of the single-type experiments (Hanabi, SMAC, MAgent, Overcooked and the HLA transfer), with one rendered prompt per domain.
 
 ## How to read this file
 
 - Paths that start with `code/` point into this repository. Paths that start with `data/` point into the data archive that accompanies the release; that archive is not part of this repository tree.
 - Code blocks are quoted from the code files. I removed docstrings and comment-only lines from the quotations and changed nothing else, so the comments in the files themselves may differ from what is shown here.
 - `{text}`, `{pool}`, `{default}` and `{examples}` are placeholders that the builder fills in. Everything else in a template is sent as written.
-- Every file in `examples/` is a verbatim copy of a stored call record (user prompt and raw completion). The system instruction of the bare-prompt arms is not stored in the records; for those files the header says that the instruction is derived from the code. No example is rendered by a builder.
-- I could not locate the prompts of the single-type slice (Hanabi, SMAC, Overcooked and the MAgent single-type runs). Section 6 says so. The transfer to the HLA stack (Section 7) is documented as a template only.
+- Every file in `examples/` is a verbatim copy of a stored call record (user prompt and raw completion). The system instruction of the bare-prompt arms is not stored in the records; for those files the header says that the instruction is derived from the code.
+- The files in `single_type/examples/` are different: the records of those experiments do not store the prompt text, so each file is rendered by the original builder, and its first line says that it is not a recorded call. The quotations in Sections 6 and 7 are copied from the builders without the lines that compute the fields; the files in `single_type/` hold the full code.
+- Section 6 covers the single-type slice (Hanabi, SMAC, MAgent and Overcooked) and Section 7 the transfer to the HLA stack. The native rules and situation texts of the HLA stack are not part of this release, so Section 7 shows the part of that prompt that I wrote and marks the rest as missing.
 
 ## 1. Common machinery
 
@@ -1139,22 +1140,145 @@ The record stores the system message (`system_prompt`), the prompt, the raw repl
 
 ## 6. Single-type slice
 
-I could not locate the language-model prompts of the single-type slice (Hanabi, SMAC, Overcooked, MAgent single-type). The sweep drivers that `data/single_type/experiments_phase3/README.md` names (`run_hanabi_sweep_v2.py`, `run_smac_sweep_v2.py`, `run_magent_sweep_v2.py`) are not archived, and no stored record in the data archive contains a prompt for these runs. `code/oghp/experiments0106b/scripts/run_magent_sweep.py` holds a meta-planner prompt for MAgent battle, `build_magent_prompt`, but I have not verified that it is the prompt of the reported runs, so I do not list it as one.
+In the single-type slice a language model chooses one strategy for a fixed executor, once per planning window. The executor then runs that strategy until the next call. The four domains are Hanabi-Small (2 players), SMAC (maps 3m, 8m and MMM), MAgent battle (map size 20) and Overcooked (four layouts). The verbatim extracts are in `single_type/`: `hanabi.py`, `smac.py`, `magent.py` and `overcooked.py`. Each file starts with a comment that names the original script and function. In each file, only comments and docstrings are shortened and translated, and the prompt strings, the parsers and the request bodies are copied from the code that ran. The endpoint address and the keys are left out. `single_type/examples/` holds one rendered prompt per domain. None of these prompts is a recorded call, because the run records of this slice keep the outcome of each episode and the number and length of the calls but not the prompt text. Each example file says so in its first line and states how the state was built. The parsing examples in those files use replies that I wrote by hand.
+
+If a supplementary listing of one of these prompts and the text in this section differ, the text here is the one that was sent.
+
+### Call and settings
+
+The calls go to the chat completions interface of an OpenAI-compatible server with gpt-oss-120b. The request has one user message and no system message, and the temperature is 0.5. The reply is read from `content`; if that is empty, from `reasoning_content` or `reasoning`. The field `reasoning_effort` is added only when the environment variable `LLM_REASONING_EFFORT` is set or the server address contains `nvidia`, and then it is `low` unless the variable says otherwise. The environment variable `LLM_MAX_TOKENS` overrides the token cap in every domain.
+
+| Domain and cell | Choices | Planning window | Calls per episode | Cap in the code | On a failed call or an unreadable reply |
+| --- | --- | --- | --- | --- | --- |
+| Hanabi-Small, 2 players | `INFORM_PLAYABLE`, `PLAY_KNOWN`, `DISCARD_USELESS`, `DISCARD_OLDEST` | 99 turns | 1 (the episodes end before turn 99) | 80 tokens | failed call: `META: INFORM_PLAYABLE`; reply with no token: `DISCARD_OLDEST` |
+| SMAC 3m, 8m, MMM | `focus_fire`, `spread_fire`, `kite`, `retreat`, `advance` | 20 steps | 1 at the start, then 1 per 20 steps | 400 tokens | `focus_fire` |
+| MAgent battle, map size 20, 100 steps | `ATTACK_FORWARD`, `HOLD_POSITION`, `SPREAD_OUT`, `RETREAT` | 99 steps | 2 (steps 0 and 99) | 60 tokens in the sweep, 80 in the temperature-controlled router | `ATTACK_FORWARD` |
+| Overcooked, 4 layouts, 400 steps | 8 tasks, one pair per window | 20 steps | 20 | 120 tokens | `get_onion` for both chefs |
+
+The Hanabi and MAgent calls make up to four attempts, after waits of 0, 5, 15 and 30 seconds, when the server answers 429 or the call fails. The timeout is 30 seconds. The SMAC call is made once with a timeout of 30 seconds. The Overcooked call is made once with a timeout of 30 seconds, or, in the runs that spread the load over several keys, up to three times with a timeout of 45 seconds. In the runs with several keys, a call whose attempts all fail is counted as an API failure and is kept apart from a reply that could not be parsed.
+
+The runs that I report call these builders through two paths: the sweep scripts (`call_llm`, `call_llm_v2`) and a diagnostic router script that passes the temperature as an argument (0.5 here) to a copy of `call_llm_v2`. The prompt text and the request body are the same in both. The value of `LLM_MAX_TOKENS` in the runs is not archived. The logged completions of the hosted runs are longer than the caps above (Hanabi up to 1,618 tokens), so those runs used a larger cap than the code defaults.
+
+### Hanabi (`single_type/hanabi.py`)
+
+The builder is `build_hanabi_prompt_v2`. It reads the text observation and computes the fireworks, the number of info and life tokens, the deck size, the partner's visible cards, what the current player knows about its own cards, whether a partner card is playable, and whether an own card is known to be playable or useless. Then it assembles the text below, which is quoted without the lines that compute the fields:
+
+```python
+rules = (
+    "STRATEGY GUIDE v2 (life=1 means a single misplay loses the entire game):\n"
+    "  PRIORITY ORDER (apply first that matches):\n"
+    f"  1. If your_card_known_playable={own_known_playable}: pick PLAY_KNOWN.\n"
+    f"  2. If info_tokens={info_tokens}>0 AND (early_game[deck>=30] OR partner_has_playable={playable_str.startswith('YES')}):\n"
+    "       pick INFORM_PLAYABLE.  (Hints are CHEAP and SAFE; never lose life from hinting.)\n"
+    f"  3. If any_card_known_useless={own_known_useless}: pick DISCARD_USELESS.\n"
+    f"  4. If info_tokens={info_tokens}=0 AND no other option: pick DISCARD_OLDEST as last resort.\n\n"
+    f"  DISCARD_OLDEST IS ALMOST NEVER CORRECT in life=1 except as rule-4 last resort.\n"
+    f"  Current deck={deck}, info_tokens={info_tokens}.\n"
+)
+return (
+    "You are a Hanabi meta-planner for a 2-color/5-rank/life=1 cooperative game. Pick exactly ONE meta-task.\n"
+    f"Fireworks: {fw}; info_tokens={info_tokens}; life_tokens={life_tokens}; deck={deck}.\n"
+    f"Partner hand (you can see): {ph_str}.\n"
+    f"Your hand (your knowledge from past hints): {sk_str}.\n"
+    f"Partner has a directly playable card right now? {playable_str}.\n"
+    + rules +
+    "Available meta-tasks: INFORM_PLAYABLE | PLAY_KNOWN | DISCARD_USELESS | DISCARD_OLDEST.\n"
+    "Output ONLY one line: META: <token>\n"
+    "Example: META: INFORM_PLAYABLE\n"
+    "Answer:"
+)
+```
+
+The parser `parse_hanabi_meta_v2` upper-cases the reply and reads the last non-empty line, after removing a `META:` prefix. It returns the first token of the choice list that occurs in that line, in the order `INFORM_PLAYABLE`, `PLAY_KNOWN`, `DISCARD_USELESS`, `DISCARD_OLDEST`. If the last line holds no token, it searches the whole reply in the same order. If there is still none, it returns `DISCARD_OLDEST`. The extract also holds the observation parsers that the builder uses. The example file shows two prompts of 1,147 and 1,158 characters; the call logs of the hosted runs record 438 to 444 prompt tokens for the first call of each episode.
+
+### SMAC (`single_type/smac.py`)
+
+The prompt is written in Chinese and was sent in Chinese. The builder is `get_tactical_plan`. The health values are the hit points of each unit divided by 100 (0 for a dead unit), printed as percentages.
+
+```python
+prompt = (
+    f"你是星际争霸 II 战术指挥官。地图: {map_name}。"
+    f"我方 {n_agents} 单位 vs 敌方 {n_enemies} 单位。\n"
+    f"我方血量: {[f'{h:.0%}' for h in ally_health]}\n"
+    f"敌方血量: {[f'{h:.0%}' for h in enemy_health]}\n\n"
+    "可用战术: focus_fire / spread_fire / kite / retreat / advance\n"
+    "DSL 组合: 'A ; B' 顺序; 'A | B' 并行\n"
+    "只输出 DSL 表达式（不超过两个战术）："
+)
+```
+
+The parser `parse_smac_tactics_v2` removes brackets and keeps only the text before the first `;`. It splits that text at `|` and takes, for each part, the first tactic name that occurs in it. The executor gives the unit with index i the tactic `tactics[i % len(tactics)]`. A reply with no tactic name gives `focus_fire`. The call logs of the hosted runs record 184 (3m), 214 (8m) and 224 (MMM) prompt tokens per call.
+
+### MAgent (`single_type/magent.py`)
+
+The builder is `build_magent_prompt`. It counts the living red and blue units, averages their positions into two centroids and prints the distance between the centroids. The positions come from the underlying environment through `get_positions`.
+
+```python
+return (
+    "You are a meta-planner for the RED team in MAgent battle (a multi-agent skirmish).\n"
+    f"Red alive: {n_red}, Blue alive: {n_blue}, step: {step}/{max_cycles}.\n"
+    f"Red centroid: {red_centroid}, Blue centroid: {blue_centroid}, centroid_dist: {dist:.1f}.\n"
+    "Pick exactly ONE meta-task for the team this phase:\n"
+    "  ATTACK_FORWARD - move toward nearest enemy and attack adjacent ones (default offensive)\n"
+    "  HOLD_POSITION  - stay and only attack adjacent enemies (when outnumbering blue locally)\n"
+    "  SPREAD_OUT     - spread away from allies; attack adjacent enemies (avoid clustering)\n"
+    "  RETREAT        - hold (a pacifist last resort; rarely useful)\n"
+    "Heuristic: if red >= blue and dist < 5 → ATTACK_FORWARD; if red < blue → SPREAD_OUT (avoid being surrounded).\n"
+    "Output ONLY the meta-task token. Example: ATTACK_FORWARD\n"
+    "Answer:"
+)
+```
+
+The parser `parse_magent_meta_v2` upper-cases the reply and returns the first choice that occurs in it; a reply with none gives `ATTACK_FORWARD`. The choices are held in a set, so a reply that names two choices is resolved in an order that is not fixed. The call logs of the hosted runs record 273 to 290 prompt tokens per call. The example file shows the prompt at step 0 with the real initial positions (759 characters).
+
+### Overcooked (`single_type/overcooked.py`)
+
+The arm that calls the model is `llm_task`. The prompt is built by `build_plan_prompt`. The pot status comes from the soup object on the first pot, and the reach strings come from a breadth-first search of the chef's mapper over the four facility types.
+
+```python
+return (
+    f"You are an Overcooked task planner. Layout: {layout}.\n"
+    f"Pot status: {pot_summary}.\n"
+    f"Chef 0 holds: {held[0] if len(held) > 0 else 'empty'}. {reach0}\n"
+    f"Chef 1 holds: {held[1] if len(held) > 1 else 'empty'}. {reach1}\n"
+    "Note: if a chef has reach=False for a facility, they CANNOT do "
+    "tasks needing it directly; they must drop items on a shared counter "
+    "for the other chef to pick up (handover).\n"
+    "Pick the best next high-level task for each chef.\n"
+    "Available tasks: get_onion, put_onion, cook, get_dish, plate_soup, "
+    "serve_soup, drop_held_item, stay.\n"
+    "Output ONLY two task names separated by ' | ' (chef_0_task | chef_1_task).\n"
+    "Example: get_onion | get_dish\n"
+    "Answer:"
+)
+```
+
+The parser `parse_plan` removes brackets, reads the last non-empty line, keeps the text before the first `;`, splits at `|`, drops a `chef_k:` prefix, and keeps the first word of each part if it is one of the eight task names. One valid name is repeated for the second chef. If there is none, the pair is `get_onion | get_onion`, and the call is counted as a parse fallback. The task pair is applied to the chefs for the next 20 steps, and a fixed executor resolves it with the safety rules of `task_resolve.py` and carries it out. The run records keep, per episode, the task log of the first 40 changes, the number of calls (20), the number of parse fallbacks and the summed latency; the runs with several keys also keep the number of attempts and API failures. The cap and the server of the main run are not recorded in the archive; the code default for the cap is 120 tokens. The example file shows the prompt of the first step in two layouts.
+
+### Not included
+
+Two other builders exist in the scripts and are not in `single_type/`: `build_hanabi_prompt` in `run_hanabi_sweep.py` and the role-based `build_overcooked_prompt_v2`. The reported runs do not call them. The Hanabi sweep, the temperature-controlled router and the substitution check call `build_hanabi_prompt_v2`, and the `llm_task` arm of the Overcooked deployment script calls `build_plan_prompt`. The prompt lengths in the call logs (Hanabi 438 to 444 tokens for the 1,147 and 1,158 characters of the builder above) agree with the builder that I include.
 
 ## 7. HLA transfer
 
-The transfer experiment uses gpt-oss-120b as a sampled prior over macro actions, not as a strategy selector. The call is built in `data/hla_transfer/audit/llm_client.py` (`sample_prior`). The client draws M = 10 independent completions per decision at temperature 1.0 with `max_tokens` 700, counts which available action each completion names, and smooths the counts with an additive constant of 0.5. The endpoint and the keys in that file are not part of the prompt, and I do not reproduce them here.
+The transfer experiment uses gpt-oss-120b as a sampled prior over macro actions, not as a strategy selector. The verbatim extract is `single_type/hla.py`, taken from `sample_prior` and its helpers in `data/hla_transfer/audit/llm_client.py`; the address and the keys are left out. The rendering in `single_type/examples/hla.txt` uses the real code with placeholders for the native texts and with the available actions and the action history of one recorded decision. It also lists the recorded counts of that decision.
+
+Each decision draws M = 10 independent completions at temperature 1.0 with `max_tokens` 700 and a timeout of 90 seconds. A failed call is retried up to five times with growing waits and keys that rotate. The reply is read from `content` only. One episode has about 16 decisions (1,642 decisions in 100 episodes on the partition map and 1,581 on the ring map), so about 160 calls. The records show about 743 to 753 prompt tokens and 135 to 197 completion tokens per call, and 18 retries and 4 parse failures in 32,230 calls.
 
 The system message is the game rules of the native stack (`native_prompts[0][0]`). The user message is the native situation text followed by three fixed parts:
 
-```
-<native situation text>
-Actions you have already taken, in order: <chosen_so_far>.        (only if there are earlier actions)
-Available actions right now: <comma-separated available actions>.
-Reply with exactly one action, copied verbatim from the available list. No explanation, no punctuation, nothing else.
+```python
+acted = ("Actions you have already taken, in order: " + chosen_so_far + ".\n") \
+    if chosen_so_far else ""
+user = (situation + "\n" + acted +
+        "Available actions right now: " + ", ".join(available) + ".\n" +
+        "Reply with exactly one action, copied verbatim from the available list. "
+        "No explanation, no punctuation, nothing else.")
 ```
 
-The native rules text and situation text come from the HLA stack and are not part of this release, so I cannot show a complete rendered prompt. A reply is parsed by an exact, case-insensitive match against the available actions, then by a unique substring match, then by the earliest mention; a reply that matches nothing is counted as a parse failure and leaves the counts unchanged.
+A reply is parsed by an exact, case-insensitive match against the available actions, then by a unique substring match, then by the earliest mention; a reply that matches nothing is a parse failure and leaves the counts unchanged. The counts are smoothed with an additive constant of 0.5, and the log of the smoothed frequency is the prior that enters the native combination `prior - prob_base`; the largest value selects the macro action.
+
+The native rules text and situation text come from the HLA stack, which is not part of this release, and I could not recover them, so I cannot show a complete prompt.
 
 ## 8. Examples index
 
@@ -1173,3 +1297,13 @@ All files are in `examples/`. Each starts with a header (domain, cell, arm file,
 | `briefing_prefix_single_nshot0.txt`, `briefing_diag_semantic_single_nshot0.txt` | briefing followed by the play counts; play counts only |
 | `taskstating_single_nshot0.txt`, `taskstating_hypothesis_first_nshot0.txt`, `taskstating_single_nshot1.txt`, `taskstating_single_nshot42.txt` | briefing line, task-stating prompt |
 | `taskstating_single_shuffled_pool.txt`, `taskstating_newword_heldout_single_nshot0.txt`, `taskstating_classic_semantic_single_nshot0.txt` | task-stating prompt with shuffled pool, new wordings on a held-out type, and the three-strategy sandbox |
+
+The files of the single-type slice are in `single_type/examples/`. Each starts with a line that says how it was rendered, and each ends with parsing examples whose replies I wrote by hand.
+
+| File | Content |
+| --- | --- |
+| `hanabi.txt` | Hanabi-Small, two prompts (no playable partner card, and one playable partner card) |
+| `smac.txt` | SMAC, first-step prompts for 3m and MMM |
+| `magent.txt` | MAgent battle, prompt at step 0 with the real initial positions and a prompt at step 99 |
+| `overcooked.txt` | Overcooked, first-step prompts for cramped_room and forced_coordination |
+| `hla.txt` | HLA transfer, system and user message with placeholders for the native texts, and the recorded counts of one decision |

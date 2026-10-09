@@ -1,0 +1,54 @@
+# rendered by the builder with a stub state, not a recorded call
+# builder: build_hanabi_prompt_v2 in hanabi.py
+# state: Hanabi-Small, 2 players, first turn of a game (3 info tokens, 1 life, deck 16, no hints given yet);
+#        the observation text is written by hand in the layout the parsers read
+# call: one user message, no system message, temperature 0.5, max_tokens 80 (LLM_MAX_TOKENS overrides)
+
+----- user message, partner has no playable card (1147 characters) -----
+You are a Hanabi meta-planner for a 2-color/5-rank/life=1 cooperative game. Pick exactly ONE meta-task.
+Fireworks: {'R': 0, 'Y': 0}; info_tokens=3; life_tokens=1; deck=16.
+Partner hand (you can see): slot0=R2, slot1=Y3.
+Your hand (your knowledge from past hints): slot0=col∈{R,Y}/rank∈{1,2,3,4,5}, slot1=col∈{R,Y}/rank∈{1,2,3,4,5}.
+Partner has a directly playable card right now? NO.
+STRATEGY GUIDE v2 (life=1 means a single misplay loses the entire game):
+  PRIORITY ORDER (apply first that matches):
+  1. If your_card_known_playable=False: pick PLAY_KNOWN.
+  2. If info_tokens=3>0 AND (early_game[deck>=30] OR partner_has_playable=False):
+       pick INFORM_PLAYABLE.  (Hints are CHEAP and SAFE; never lose life from hinting.)
+  3. If any_card_known_useless=False: pick DISCARD_USELESS.
+  4. If info_tokens=3=0 AND no other option: pick DISCARD_OLDEST as last resort.
+
+  DISCARD_OLDEST IS ALMOST NEVER CORRECT in life=1 except as rule-4 last resort.
+  Current deck=16, info_tokens=3.
+Available meta-tasks: INFORM_PLAYABLE | PLAY_KNOWN | DISCARD_USELESS | DISCARD_OLDEST.
+Output ONLY one line: META: <token>
+Example: META: INFORM_PLAYABLE
+Answer:
+
+----- user message, partner holds a playable card (1158 characters) -----
+You are a Hanabi meta-planner for a 2-color/5-rank/life=1 cooperative game. Pick exactly ONE meta-task.
+Fireworks: {'R': 0, 'Y': 0}; info_tokens=3; life_tokens=1; deck=16.
+Partner hand (you can see): slot0=R1, slot1=Y3.
+Your hand (your knowledge from past hints): slot0=col∈{R,Y}/rank∈{1,2,3,4,5}, slot1=col∈{R,Y}/rank∈{1,2,3,4,5}.
+Partner has a directly playable card right now? YES (slot0=R1).
+STRATEGY GUIDE v2 (life=1 means a single misplay loses the entire game):
+  PRIORITY ORDER (apply first that matches):
+  1. If your_card_known_playable=False: pick PLAY_KNOWN.
+  2. If info_tokens=3>0 AND (early_game[deck>=30] OR partner_has_playable=True):
+       pick INFORM_PLAYABLE.  (Hints are CHEAP and SAFE; never lose life from hinting.)
+  3. If any_card_known_useless=False: pick DISCARD_USELESS.
+  4. If info_tokens=3=0 AND no other option: pick DISCARD_OLDEST as last resort.
+
+  DISCARD_OLDEST IS ALMOST NEVER CORRECT in life=1 except as rule-4 last resort.
+  Current deck=16, info_tokens=3.
+Available meta-tasks: INFORM_PLAYABLE | PLAY_KNOWN | DISCARD_USELESS | DISCARD_OLDEST.
+Output ONLY one line: META: <token>
+Example: META: INFORM_PLAYABLE
+Answer:
+
+----- parsing -----
+reply 'META: INFORM_PLAYABLE' -> INFORM_PLAYABLE
+reply 'The best option is discard.\nMETA: PLAY_KNOWN' -> PLAY_KNOWN
+reply '' -> DISCARD_OLDEST
+reply 'no idea' -> DISCARD_OLDEST
+(the replies above are written by hand to show the parser; the empty reply and the reply with no token give the default)

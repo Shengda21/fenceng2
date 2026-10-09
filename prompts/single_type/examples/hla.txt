@@ -1,0 +1,27 @@
+# rendered by the builder with a stub state, not a recorded call
+# builder: GatewaySampler.sample_prior in hla.py
+# state: the host system's two texts are placeholders because I do not have them; the available actions
+#        and the action history are those of the second decision of one recorded ring episode
+# call: a system message and a user message, temperature 1.0, max_tokens 700, 10 independent calls per decision
+
+----- system message -----
+<game rules text written by the host system; not recoverable>
+
+----- user message -----
+<situation text written by the host system; not recoverable>
+Actions you have already taken, in order: Chop Tomato.
+Available actions right now: Chop Tomato, Chop Lettuce, Chop Onion.
+Reply with exactly one action, copied verbatim from the available list. No explanation, no punctuation, nothing else.
+
+----- parsing -----
+reply 'Chop Lettuce' -> Chop Lettuce
+reply '"Chop Lettuce."' -> Chop Lettuce
+reply 'I choose chop onion' -> Chop Onion
+reply 'Prepare Bob Ingredients' -> None
+reply None -> None
+(the replies above are written by hand to show the parser; a reply naming no available action is a parse failure and is left out of the counts)
+
+----- recorded outcome of that decision (from the run records, counts only, no reply text) -----
+counts: Chop Tomato 0, Chop Lettuce 10, Chop Onion 0, n_ok 10
+log prior with beta 0.5: Chop Tomato -3.1355, Chop Lettuce -0.0910, Chop Onion -3.1355
+(recorded values: Chop Tomato -3.1355, Chop Lettuce -0.091, Chop Onion -3.1355)

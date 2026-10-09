@@ -1,0 +1,36 @@
+# rendered by the builder from the first state of the real environment, not a recorded call
+# builder: build_plan_prompt in overcooked.py
+# state: the first step of an episode in the real Overcooked environment (nothing held, empty pot);
+#        reach[...] is computed by the facility search of the executor's mapper
+# call: one user message, no system message, temperature 0.5, max_tokens 120 (LLM_MAX_TOKENS overrides)
+
+----- user message, cramped_room -----
+You are an Overcooked task planner. Layout: cramped_room.
+Pot status: empty.
+Chef 0 holds: empty. reach[onion]=True dish=True pot=True serve=True
+Chef 1 holds: empty. reach[onion]=True dish=True pot=True serve=True
+Note: if a chef has reach=False for a facility, they CANNOT do tasks needing it directly; they must drop items on a shared counter for the other chef to pick up (handover).
+Pick the best next high-level task for each chef.
+Available tasks: get_onion, put_onion, cook, get_dish, plate_soup, serve_soup, drop_held_item, stay.
+Output ONLY two task names separated by ' | ' (chef_0_task | chef_1_task).
+Example: get_onion | get_dish
+Answer:
+
+----- user message, forced_coordination -----
+You are an Overcooked task planner. Layout: forced_coordination.
+Pot status: empty.
+Chef 0 holds: empty. reach[onion]=False dish=False pot=True serve=True
+Chef 1 holds: empty. reach[onion]=True dish=True pot=False serve=False
+Note: if a chef has reach=False for a facility, they CANNOT do tasks needing it directly; they must drop items on a shared counter for the other chef to pick up (handover).
+Pick the best next high-level task for each chef.
+Available tasks: get_onion, put_onion, cook, get_dish, plate_soup, serve_soup, drop_held_item, stay.
+Output ONLY two task names separated by ' | ' (chef_0_task | chef_1_task).
+Example: get_onion | get_dish
+Answer:
+
+----- parsing -----
+reply 'get_onion | get_dish' -> ['get_onion', 'get_dish']
+reply 'chef_0: cook | chef_1: stay' -> ['cook', 'stay']
+reply 'plan: serve_soup' -> ['serve_soup', 'serve_soup']
+reply 'unclear' -> ['get_onion', 'get_onion']
+(the replies above are written by hand to show the parser; a reply with no valid task gives the default pair and counts as a parse fallback)

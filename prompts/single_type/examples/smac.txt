@@ -1,0 +1,31 @@
+# rendered by the builder with a stub state, not a recorded call
+# builder: get_tactical_plan in smac.py
+# state: the first step of each map; health is hit points / 100 as the builder prints it
+#        (marine 45, marauder 125, medivac 150); both sides full health
+# call: one user message, no system message, temperature 0.5, max_tokens 400 (LLM_MAX_TOKENS overrides)
+
+----- user message, 3m (210 characters) -----
+你是星际争霸 II 战术指挥官。地图: 3m。我方 3 单位 vs 敌方 3 单位。
+我方血量: ['45%', '45%', '45%']
+敌方血量: ['45%', '45%', '45%']
+
+可用战术: focus_fire / spread_fire / kite / retreat / advance
+DSL 组合: 'A ; B' 顺序; 'A | B' 并行
+只输出 DSL 表达式（不超过两个战术）：
+
+----- user message, MMM (317 characters) -----
+你是星际争霸 II 战术指挥官。地图: MMM。我方 10 单位 vs 敌方 10 单位。
+我方血量: ['45%', '45%', '45%', '45%', '45%', '45%', '45%', '125%', '125%', '150%']
+敌方血量: ['45%', '45%', '45%', '45%', '45%', '45%', '45%', '125%', '125%', '150%']
+
+可用战术: focus_fire / spread_fire / kite / retreat / advance
+DSL 组合: 'A ; B' 顺序; 'A | B' 并行
+只输出 DSL 表达式（不超过两个战术）：
+
+----- parsing -----
+reply 'focus_fire ; kite' -> ['focus_fire']
+reply 'kite | advance' -> ['kite', 'advance']
+reply 'Retreat' -> ['retreat']
+reply '' -> ['focus_fire']
+reply 'do something' -> ['focus_fire']
+(the replies above are written by hand to show the parser; the first tactic list is the one the executor cycles over)
