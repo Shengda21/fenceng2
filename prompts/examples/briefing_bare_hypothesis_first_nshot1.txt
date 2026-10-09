@@ -1,0 +1,56 @@
+Prompt example (verbatim record, not re-rendered)
+Domain: briefing (bare prompt)
+Cell: sandbox-traits-M18-K10-sharp0.8-noise0-react-briefing-sameword
+Arm file: data/briefing/all/sandbox-traits-M18-K10-sharp0.8-noise0-react-briefing-sameword/llm__gpt-oss-120b__hypothesis_first__nshot1.jsonl.gz
+Record: first line of the file (episode 0, first decision); {"attempts": 1, "episode": 0, "fallback": false, "seed": 0}
+Hidden opponent type of this episode (not shown to the model): ROCK-copy_last-flip
+Generation settings as recorded: {"extra_body": {"reasoning_effort": "low"}, "max_tokens": 1024, "temperature": 0.5}
+System instruction (system instruction derived from code/briefing/v8_lib/v8lib/arms/llm.py (LLMSelector._messages) and code/briefing/v8_sandbox/sandbox/selectors.py (HYPOTHESIS_INSTRUCTION for the traits family); the system message is not stored in the record):
+First write one sentence naming the inferred type. Then write 'Final: ' followed by exactly one strategy name from the pool.
+
+=== USER PROMPT (verbatim) ===
+Observation: The opponent likes to throw rock. It sticks to its habit and does not react to your moves. It keeps this style for the whole match.
+Strategy: PAPER
+Observation: The opponent likes to throw paper. It sticks to its habit and does not react to your moves. It keeps this style for the whole match.
+Strategy: SCISSORS
+Observation: The opponent likes to throw scissors. It sticks to its habit and does not react to your moves. It keeps this style for the whole match.
+Strategy: ROCK
+Observation: The opponent likes to throw rock. It mostly answers your last move with the throw that defeats it. It keeps this style for the whole match.
+Strategy: OUTPACE
+Observation: The opponent likes to throw scissors. It mostly answers your last move with the throw that defeats it. It keeps this style for the whole match.
+Strategy: OUTPACE
+Observation: The opponent likes to throw rock. It mostly copies your last move. It keeps this style for the whole match.
+Strategy: MIRROR_BEAT
+Observation: The opponent likes to throw paper. It mostly copies your last move. It keeps this style for the whole match.
+Strategy: MIRROR_BEAT
+Observation: The opponent likes to throw rock. It sticks to its habit and does not react to your moves. Halfway through the match, its favourite moves on to the throw that beats its old favourite.
+Strategy: LAG_R
+Observation: The opponent likes to throw paper. It sticks to its habit and does not react to your moves. Halfway through the match, its favourite moves on to the throw that beats its old favourite.
+Strategy: LAG_P
+Observation: The opponent likes to throw scissors. It sticks to its habit and does not react to your moves. Halfway through the match, its favourite moves on to the throw that beats its old favourite.
+Strategy: LAG_S
+Observation: The opponent likes to throw paper. It mostly answers your last move with the throw that defeats it. Halfway through the match, it stops beating your last throw and starts copying it instead.
+Strategy: SWITCH_OM
+Observation: The opponent likes to throw scissors. It mostly answers your last move with the throw that defeats it. Halfway through the match, it stops beating your last throw and starts copying it instead.
+Strategy: SWITCH_OM
+Observation: The opponent likes to throw rock. It mostly copies your last move. Halfway through the match, it stops copying your last throw and starts throwing whatever beats it instead.
+Strategy: SWITCH_MO
+Observation: The opponent likes to throw scissors. It mostly copies your last move. Halfway through the match, it stops copying your last throw and starts throwing whatever beats it instead.
+Strategy: SWITCH_MO
+The opponent likes to throw rock. From the second round on, it usually repeats the throw you made in the previous round, and otherwise falls back on its favourite. After the halfway point it no longer repeats your previous move; it plays what beats your previous move instead.
+Pool: - ROCK: always throw rock
+- PAPER: always throw paper
+- SCISSORS: always throw scissors
+- OUTPACE: each round, throw the move that beats the move that would beat your own previous throw
+- MIRROR_BEAT: each round, throw the move that beats your own previous throw
+- LAG_R: throw paper until the halfway point of the match, then scissors for the rest
+- LAG_P: throw scissors until the halfway point of the match, then rock for the rest
+- LAG_S: throw rock until the halfway point of the match, then paper for the rest
+- SWITCH_OM: until the halfway point, each round throw the move that beats the move that would beat your own previous throw; after that, throw the move that beats your own previous throw
+- SWITCH_MO: until the halfway point, each round throw the move that beats your own previous throw; after that, throw the move that beats the move that would beat your own previous throw
+Default: ROCK
+=== RAW COMPLETION (verbatim) ===
+Inferred type: Unknown pattern  
+Final: ROCK
+=== PARSED STRATEGY ===
+ROCK

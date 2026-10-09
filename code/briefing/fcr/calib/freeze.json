@@ -1,0 +1,6 @@
+{
+ "frozen_utc": "2026-10-06T10:24:04.984618+00:00",
+ "prereg_sha256_at_freeze": "89d1da6f9a8ed08e5f97223e1595d3e8d9a1a32a3ed5db44a0270b41724982df",
+ "chosen_sha256": "93328267e05e99cfd90a252c02e0fb11424c852cdd1ab517575190d327597332",
+ "evaluate_py_sha256_at_freeze": "450e2fcafca93253d22a9d3e78aca591ac73bf9ca47c3c3d02eb59276df1c4c1"
+}

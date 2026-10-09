@@ -1,0 +1,14 @@
+{
+ "sandbox/briefing.py": {
+  "release_path": "code/briefing/v8_sandbox/sandbox/briefing.py",
+  "sha256": "a4b1d40471ece898ee0d7cd0e10f7c39bd500d82fb7d1b7012686a4b171e4346"
+ },
+ "sandbox/game.py": {
+  "release_path": "code/briefing/v8_sandbox/sandbox/game.py",
+  "sha256": "ff4d495d349819b36254892bbbabb6bc6beac89f2f0d77f898972b013c9ea8cf"
+ },
+ "sandbox/prompt_v2.py": {
+  "release_path": "code/briefing/v8_sandbox/sandbox/prompt_v2.py",
+  "sha256": "795c27855a0116286cc34e49d1687b859ff75eb5880f6c40ea1b2ca8e43e2f96"
+ }
+}

@@ -1,0 +1,359 @@
+{
+ "M9-react2": {
+  "M": 9,
+  "held_out_set": "react2",
+  "seen": [
+   "ROCK-habit",
+   "PAPER-habit",
+   "SCISSORS-habit",
+   "ROCK-beat_last",
+   "SCISSORS-beat_last",
+   "ROCK-copy_last",
+   "PAPER-copy_last"
+  ],
+  "composer": {
+   "main": {
+    "alpha": 1.0
+   },
+   "pairwise": {
+    "alpha": 0.001
+   }
+  },
+  "classifier": {
+   "full": {
+    "tfidf": {
+     "C": {
+      "favourite": 100.0,
+      "reactivity": 100.0
+     }
+    },
+    "embed": {
+     "C": {
+      "favourite": 100.0,
+      "reactivity": 10.0
+     }
+    }
+   },
+   "n_bare": {
+    "tfidf": {
+     "C": {
+      "favourite": 100.0,
+      "reactivity": 100.0
+     }
+    },
+    "embed": {
+     "C": {
+      "favourite": 100.0,
+      "reactivity": 10.0
+     }
+    }
+   },
+   "n_task": {
+    "tfidf": {
+     "C": {
+      "favourite": 10.0,
+      "reactivity": 10.0
+     }
+    },
+    "embed": {
+     "C": {
+      "favourite": 100.0,
+      "reactivity": 100.0
+     }
+    }
+   }
+  }
+ },
+ "M9-diag3": {
+  "M": 9,
+  "held_out_set": "diag3",
+  "seen": [
+   "PAPER-habit",
+   "SCISSORS-habit",
+   "ROCK-beat_last",
+   "SCISSORS-beat_last",
+   "ROCK-copy_last",
+   "PAPER-copy_last"
+  ],
+  "composer": {
+   "main": {
+    "alpha": 0.1
+   },
+   "pairwise": {
+    "alpha": 0.001
+   }
+  },
+  "classifier": {
+   "full": {
+    "tfidf": {
+     "C": {
+      "favourite": 100.0,
+      "reactivity": 100.0
+     }
+    },
+    "embed": {
+     "C": {
+      "favourite": 100.0,
+      "reactivity": 10.0
+     }
+    }
+   },
+   "n_bare": {
+    "tfidf": {
+     "C": {
+      "favourite": 100.0,
+      "reactivity": 100.0
+     }
+    },
+    "embed": {
+     "C": {
+      "favourite": 100.0,
+      "reactivity": 10.0
+     }
+    }
+   },
+   "n_task": {
+    "tfidf": {
+     "C": {
+      "favourite": 100.0,
+      "reactivity": 10.0
+     }
+    },
+    "embed": {
+     "C": {
+      "favourite": 100.0,
+      "reactivity": 100.0
+     }
+    }
+   }
+  }
+ },
+ "M18-react4": {
+  "M": 18,
+  "held_out_set": "react4",
+  "seen": [
+   "ROCK-habit-stable",
+   "PAPER-habit-stable",
+   "SCISSORS-habit-stable",
+   "ROCK-beat_last-stable",
+   "SCISSORS-beat_last-stable",
+   "ROCK-copy_last-stable",
+   "PAPER-copy_last-stable",
+   "ROCK-habit-flip",
+   "PAPER-habit-flip",
+   "SCISSORS-habit-flip",
+   "PAPER-beat_last-flip",
+   "SCISSORS-beat_last-flip",
+   "ROCK-copy_last-flip",
+   "SCISSORS-copy_last-flip"
+  ],
+  "composer": {
+   "main": {
+    "alpha": 0.1
+   },
+   "pairwise": {
+    "alpha": 1.0
+   }
+  },
+  "classifier": {
+   "full": {
+    "tfidf": {
+     "C": {
+      "favourite": 10.0,
+      "reactivity": 100.0,
+      "timing": 100.0
+     }
+    },
+    "embed": {
+     "C": {
+      "favourite": 100.0,
+      "reactivity": 100.0,
+      "timing": 100.0
+     }
+    }
+   },
+   "n_bare": {
+    "tfidf": {
+     "C": {
+      "favourite": 100.0,
+      "reactivity": 100.0,
+      "timing": 100.0
+     }
+    },
+    "embed": {
+     "C": {
+      "favourite": 100.0,
+      "reactivity": 100.0,
+      "timing": 100.0
+     }
+    }
+   },
+   "n_task": {
+    "tfidf": {
+     "C": {
+      "favourite": 100.0,
+      "reactivity": 100.0,
+      "timing": 100.0
+     }
+    },
+    "embed": {
+     "C": {
+      "favourite": 100.0,
+      "reactivity": 0.1,
+      "timing": 100.0
+     }
+    }
+   }
+  }
+ },
+ "M18-diag6": {
+  "M": 18,
+  "held_out_set": "diag6",
+  "seen": [
+   "PAPER-habit-stable",
+   "SCISSORS-habit-stable",
+   "ROCK-beat_last-stable",
+   "SCISSORS-beat_last-stable",
+   "ROCK-copy_last-stable",
+   "PAPER-copy_last-stable",
+   "ROCK-habit-flip",
+   "PAPER-habit-flip",
+   "PAPER-beat_last-flip",
+   "SCISSORS-beat_last-flip",
+   "ROCK-copy_last-flip",
+   "SCISSORS-copy_last-flip"
+  ],
+  "composer": {
+   "main": {
+    "alpha": 100.0
+   },
+   "pairwise": {
+    "alpha": 0.1
+   }
+  },
+  "classifier": {
+   "full": {
+    "tfidf": {
+     "C": {
+      "favourite": 100.0,
+      "reactivity": 100.0,
+      "timing": 100.0
+     }
+    },
+    "embed": {
+     "C": {
+      "favourite": 100.0,
+      "reactivity": 10.0,
+      "timing": 100.0
+     }
+    }
+   },
+   "n_bare": {
+    "tfidf": {
+     "C": {
+      "favourite": 100.0,
+      "reactivity": 100.0,
+      "timing": 100.0
+     }
+    },
+    "embed": {
+     "C": {
+      "favourite": 100.0,
+      "reactivity": 10.0,
+      "timing": 100.0
+     }
+    }
+   },
+   "n_task": {
+    "tfidf": {
+     "C": {
+      "favourite": 1.0,
+      "reactivity": 100.0,
+      "timing": 100.0
+     }
+    },
+    "embed": {
+     "C": {
+      "favourite": 100.0,
+      "reactivity": 0.01,
+      "timing": 0.01
+     }
+    }
+   }
+  }
+ },
+ "M18-react8": {
+  "M": 18,
+  "held_out_set": "react8",
+  "seen": [
+   "ROCK-habit-stable",
+   "PAPER-habit-stable",
+   "SCISSORS-habit-stable",
+   "ROCK-beat_last-stable",
+   "ROCK-copy_last-stable",
+   "ROCK-habit-flip",
+   "PAPER-habit-flip",
+   "SCISSORS-habit-flip",
+   "SCISSORS-beat_last-flip",
+   "SCISSORS-copy_last-flip"
+  ],
+  "composer": {
+   "main": {
+    "alpha": 0.01
+   },
+   "pairwise": {
+    "alpha": 1.0
+   }
+  },
+  "classifier": {
+   "full": {
+    "tfidf": {
+     "C": {
+      "favourite": 10.0,
+      "reactivity": 100.0,
+      "timing": 100.0
+     }
+    },
+    "embed": {
+     "C": {
+      "favourite": 100.0,
+      "reactivity": 10.0,
+      "timing": 100.0
+     }
+    }
+   },
+   "n_bare": {
+    "tfidf": {
+     "C": {
+      "favourite": 100.0,
+      "reactivity": 100.0,
+      "timing": 100.0
+     }
+    },
+    "embed": {
+     "C": {
+      "favourite": 100.0,
+      "reactivity": 100.0,
+      "timing": 10.0
+     }
+    }
+   },
+   "n_task": {
+    "tfidf": {
+     "C": {
+      "favourite": 1.0,
+      "reactivity": 1.0,
+      "timing": 100.0
+     }
+    },
+    "embed": {
+     "C": {
+      "favourite": 100.0,
+      "reactivity": 0.01,
+      "timing": 100.0
+     }
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,10 @@
+{
+ "frozen_utc": "2026-10-08T15:14:01.271338+00:00",
+ "prereg_sha256_at_freeze": "ecee33fbb24a046a5c4231fb287fe03f3d1eb1d3ed02325be87c7f92b424758b",
+ "sym_composer_py_sha256": "a5bdfcc149aa154994a2686421fc831f643c215cb75416db0f581ad7d8a9c606",
+ "fcr_chosen_sha256": "93328267e05e99cfd90a252c02e0fb11424c852cdd1ab517575190d327597332",
+ "evaluate_sym_py_sha256_at_freeze": "e44f8ce9b56e1638e4343200ac2aad9f9cc40131e340d54deef208007335e077",
+ "calib_check_py_sha256": "ac6e6cc581daf6b5983a27813b620f242ff76fe80f4b47159e48de1fdb8553a7",
+ "sym_calib_check_json_sha256": "76e00417f1938b36696a422dc8e7b71c8d7b276b4af9c062dd301fd0d9135956",
+ "sources_json_sha256": "0e4a4d2ff53171528a27fc055f47fa412c25fcd9cb29689db01037dc284ebccd"
+}

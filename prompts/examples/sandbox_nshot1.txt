@@ -1,0 +1,25 @@
+Prompt example (verbatim record, not re-rendered)
+Domain: sandbox
+Cell: sandbox-M3-K3-sharp0.6-noise0-semantic
+Arm file: data/llm_calls/sandbox/sandbox-M3-K3-sharp0.6-noise0-semantic/llm__gpt-oss-120b__single__nshot1.jsonl.gz
+Record: first line of the file (episode 0, first decision); {"attempt": 1, "episode_index": 0, "fallback": false}
+Generation settings as recorded: {"extra_body": {"reasoning_effort": "low"}, "max_tokens": 256, "temperature": 0.5}
+System instruction (system instruction derived from code/briefing/v8_lib/v8lib/arms/llm.py (LLMSelector._messages); the system message itself is not stored in the call record):
+Return exactly one strategy name from the pool.
+
+=== USER PROMPT (verbatim) ===
+Observation: So far the opponent has thrown rock 4 times, paper 0 times, scissors 1 times. It copied your previous move 75% of the time and best-responded 0% of the time.
+Strategy: PAPER
+Observation: So far the opponent has thrown rock 2 times, paper 2 times, scissors 1 times. It copied your previous move 50% of the time and best-responded 25% of the time.
+Strategy: SCISSORS
+Observation: So far the opponent has thrown rock 2 times, paper 0 times, scissors 3 times. It copied your previous move 50% of the time and best-responded 0% of the time.
+Strategy: ROCK
+So far the opponent has thrown rock 1 times, paper 0 times, scissors 4 times. It copied your previous move 0% of the time and best-responded 0% of the time.
+Pool: - ROCK: always throw rock
+- PAPER: always throw paper
+- SCISSORS: always throw scissors
+Default: ROCK
+=== RAW COMPLETION (verbatim) ===
+ROCK
+=== PARSED STRATEGY ===
+ROCK

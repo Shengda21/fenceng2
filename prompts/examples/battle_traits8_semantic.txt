@@ -1,0 +1,37 @@
+Prompt example (verbatim record, not re-rendered)
+Domain: battle
+Cell: battle-traits8-pool8-semantic-single
+Arm file: data/llm_calls/battle/battle-traits8-pool8-semantic-single/llm__gpt-oss-120b__single__nshot0.jsonl.gz
+Record: first line of the file (episode 0, first decision); {"attempt": 1, "episode_index": 0, "fallback": false}
+Generation settings as recorded: {"extra_body": {"reasoning_effort": "low"}, "max_tokens": 256, "temperature": 0.5}
+System instruction (system instruction derived from code/briefing/v8_lib/v8lib/arms/llm.py (LLMSelector._messages); the system message itself is not stored in the call record):
+Return exactly one strategy name from the pool.
+
+=== USER PROMPT (verbatim) ===
+
+You control the RED team at a decision window in MAgent battle.
+The enemy force is not advancing in a wide formation and is now 12.0 cells away. Few enemy units have been moving toward us while few have fired. Their spacing is holding shape, with 12 enemies still active.
+Possible co-player behavior descriptions:
+- Pattern A: push movement, tight formation control, and focus adjacent-target selection
+- Pattern B: push movement, tight formation control, and spray adjacent-target selection
+- Pattern C: push movement, spread formation control, and focus adjacent-target selection
+- Pattern D: push movement, spread formation control, and spray adjacent-target selection
+- Pattern E: hold movement, tight formation control, and focus adjacent-target selection
+- Pattern F: hold movement, tight formation control, and spray adjacent-target selection
+- Pattern G: hold movement, spread formation control, and focus adjacent-target selection
+- Pattern H: hold movement, spread formation control, and spray adjacent-target selection
+Available RED strategies:
+- ATTACK_FORWARD: each unit moves toward the nearest enemy and attacks when adjacent
+- HOLD_POSITION: units stay where they are and attack only adjacent enemies
+- SPREAD_OUT: units move away from their nearest ally to disperse, attacking adjacent enemies
+- RETREAT: units stay in place and do not attack
+- FOCUS_FIRE: units tighten toward their own centre, advance as a block toward the enemy centre, and concentrate attacks on the same adjacent target
+- FLANK: units split into two wings that approach the enemy from the sides, attacking when adjacent
+- KITE: units attack when adjacent and then step away, otherwise approaching only to two cells
+- RETREAT_REAL: units move away from the nearest enemy every step and never attack
+Default strategy: HOLD_POSITION
+Return exactly one available RED strategy name.
+=== RAW COMPLETION (verbatim) ===
+FOCUS_FIRE
+=== PARSED STRATEGY ===
+FOCUS_FIRE

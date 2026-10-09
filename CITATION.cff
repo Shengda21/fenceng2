@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+title: "When Does LLM Strategy Selection Pay in Multi-Agent Games? The Value of Reading New Agents"
+message: "If you use this code or these prompts, please cite the paper."
+type: software
+authors:
+  - alias: Shengda21
+repository-code: "https://github.com/Shengda21/fenceng2"
+license: MIT

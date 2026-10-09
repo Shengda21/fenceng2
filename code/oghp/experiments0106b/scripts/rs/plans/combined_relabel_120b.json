@@ -1,0 +1,170 @@
+{
+ "cells": [
+  {
+   "M": 4,
+   "T": {
+    "learners": 300,
+    "others": 100
+   },
+   "arms": [
+    {
+     "arm": "llm:gpt-oss-120b:single",
+     "nshot": 0
+    }
+   ],
+   "cell_id": "combined-base4-relabel",
+   "domain": "combined",
+   "encoding": "relabel",
+   "held_out": null,
+   "schedule": "single",
+   "tag": "E3-relabel",
+   "type_hints": true,
+   "type_set": "base4",
+   "max_tokens": 256,
+   "lock": "rs_combined_lock.json"
+  },
+  {
+   "M": 4,
+   "T": {
+    "learners": 300,
+    "others": 100
+   },
+   "arms": [
+    {
+     "arm": "llm:gpt-oss-120b:single",
+     "nshot": 0
+    }
+   ],
+   "cell_id": "combined-base4-swapdesc",
+   "domain": "combined",
+   "encoding": "swapdesc",
+   "held_out": null,
+   "schedule": "single",
+   "tag": "E3-relabel",
+   "type_hints": true,
+   "type_set": "base4",
+   "max_tokens": 256,
+   "lock": "rs_combined_lock.json"
+  },
+  {
+   "M": 8,
+   "T": {
+    "learners": 300,
+    "others": 100
+   },
+   "arms": [
+    {
+     "arm": "llm:gpt-oss-120b:single",
+     "nshot": 0
+    }
+   ],
+   "cell_id": "combined-traits8-relabel",
+   "domain": "combined",
+   "encoding": "relabel",
+   "held_out": null,
+   "schedule": "single",
+   "tag": "E3-relabel",
+   "type_hints": true,
+   "type_set": "traits8",
+   "max_tokens": 256,
+   "lock": "rs_combined_traits8_lock.json"
+  },
+  {
+   "M": 8,
+   "T": {
+    "learners": 300,
+    "others": 100
+   },
+   "arms": [
+    {
+     "arm": "llm:gpt-oss-120b:single",
+     "nshot": 0
+    }
+   ],
+   "cell_id": "combined-traits8-swapdesc",
+   "domain": "combined",
+   "encoding": "swapdesc",
+   "held_out": null,
+   "schedule": "single",
+   "tag": "E3-relabel",
+   "type_hints": true,
+   "type_set": "traits8",
+   "max_tokens": 256,
+   "lock": "rs_combined_traits8_lock.json"
+  }
+ ],
+ "description": "strategy-level relabelling (relabel: neutral labels, correct descriptions; swapdesc: neutral labels, deranged descriptions), LLM zero-shot",
+ "fixed_args": {
+  "battle": {
+   "blue": "scripted",
+   "default": "HOLD_POSITION",
+   "delta_scale": 1.0,
+   "fake": false,
+   "k": 20,
+   "map_size": 20,
+   "max_cycles": 100,
+   "permutation_seed": 0,
+   "pool": "pool8"
+  },
+  "combined": {
+   "blue": "scripted",
+   "default": "HOLD_LINE",
+   "delta_scale": 1.0,
+   "fake": false,
+   "k": 20,
+   "map_size": 16,
+   "max_cycles": 120,
+   "max_tokens": 120,
+   "n_melee": 6,
+   "n_ranged": 6,
+   "permutation_seed": 0,
+   "pool": "combined_pool6",
+   "temperature": 0.5
+  },
+  "sandbox": {
+   "H": 30,
+   "K": 3,
+   "calib_seeds": "100-119",
+   "delta": 1.0,
+   "features": "basic",
+   "k": 5,
+   "schedule": "single",
+   "seeds": "0-99,120-319"
+  }
+ },
+ "models": {
+  "gpt-oss-120b": {
+   "base_url": "http://LOCALHOST/v1",
+   "extra_body": {
+    "reasoning_effort": "low"
+   },
+   "model": "gpt-oss-120b"
+  },
+  "gpt-oss-20b": {
+   "base_url": "http://LOCALHOST/v1",
+   "extra_body": {
+    "reasoning_effort": "low"
+   },
+   "model": "gpt-oss-20b"
+  },
+  "qwen3.8-27b": {
+   "base_url": "http://LOCALHOST/v1",
+   "extra_body": {
+    "chat_template_kwargs": {
+     "enable_thinking": false
+    }
+   },
+   "model": "qwen3.8-27b"
+  }
+ },
+ "name": "combined_relabel_120b",
+ "paths": {
+  "battle_lock": "rs_magent_lock.json",
+  "battle_runner": "scripts/rs/run_rs_magent.py",
+  "combined_lock": "rs_combined_lock.json",
+  "combined_runner": "scripts/rs/run_rs_combined.py",
+  "python": "/root/envs/oghp/bin/python",
+  "sandbox_lock": "../v8_sandbox/sandbox_lock.json",
+  "sandbox_runner": "../v8_sandbox/run_sandbox.py"
+ }
+}

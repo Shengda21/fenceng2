@@ -1,0 +1,27 @@
+Prompt example (verbatim record, not re-rendered)
+Domain: briefing (bare prompt)
+Cell: sandbox-traits-M18-K10-sharp0.8-noise0-diag-semantic
+Arm file: data/briefing/all/sandbox-traits-M18-K10-sharp0.8-noise0-diag-semantic/llm__gpt-oss-120b__single__nshot0.jsonl.gz
+Record: first line of the file (episode 0, first decision); {"attempts": 1, "episode": 0, "fallback": false, "seed": 0}
+Hidden opponent type of this episode (not shown to the model): ROCK-copy_last-flip
+Generation settings as recorded: {"extra_body": {"reasoning_effort": "low"}, "max_tokens": 1024, "temperature": 0.5}
+System instruction (system instruction derived from code/briefing/v8_lib/v8lib/arms/llm.py (LLMSelector._messages) and code/briefing/v8_sandbox/sandbox/selectors.py (HYPOTHESIS_INSTRUCTION for the traits family); the system message is not stored in the record):
+Return exactly one strategy name from the pool.
+
+=== USER PROMPT (verbatim) ===
+So far the opponent has thrown rock 5 times, paper 0 times, scissors 0 times. It copied your previous move 100% of the time and best-responded 0% of the time.
+Pool: - ROCK: always throw rock
+- PAPER: always throw paper
+- SCISSORS: always throw scissors
+- OUTPACE: each round, throw the move that beats the move that would beat your own previous throw
+- MIRROR_BEAT: each round, throw the move that beats your own previous throw
+- LAG_R: throw paper until the halfway point of the match, then scissors for the rest
+- LAG_P: throw scissors until the halfway point of the match, then rock for the rest
+- LAG_S: throw rock until the halfway point of the match, then paper for the rest
+- SWITCH_OM: until the halfway point, each round throw the move that beats the move that would beat your own previous throw; after that, throw the move that beats your own previous throw
+- SWITCH_MO: until the halfway point, each round throw the move that beats your own previous throw; after that, throw the move that beats the move that would beat your own previous throw
+Default: ROCK
+=== RAW COMPLETION (verbatim) ===
+MIRROR_BEAT
+=== PARSED STRATEGY ===
+MIRROR_BEAT

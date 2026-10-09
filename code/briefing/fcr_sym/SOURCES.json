@@ -1,0 +1,50 @@
+{
+ "fcr/fcr_common.py": {
+  "release_path": "code/briefing/fcr/fcr_common.py",
+  "sha256": "a5e19e91bfa6890c4c05a293eec4d0f7af4e03442d6e89e00bc6326602ad7ff6"
+ },
+ "fcr/fcr_model.py": {
+  "release_path": "code/briefing/fcr/fcr_model.py",
+  "sha256": "e94c777a6165eb4ca534b65add5ec5528d78814afd75e9096664f161de4a5561"
+ },
+ "fcr/evaluate.py": {
+  "release_path": "code/briefing/fcr/evaluate.py",
+  "sha256": "371b97d194bd3359dc778174ccdc4d4aa6d73b527665e48f87fde88340151284"
+ },
+ "fcr/calib/chosen.json": {
+  "release_path": "code/briefing/fcr/calib/chosen.json",
+  "sha256": "93328267e05e99cfd90a252c02e0fb11424c852cdd1ab517575190d327597332"
+ },
+ "sandbox/briefing.py": {
+  "release_path": "code/briefing/v8_sandbox/sandbox/briefing.py",
+  "sha256": "a4b1d40471ece898ee0d7cd0e10f7c39bd500d82fb7d1b7012686a4b171e4346"
+ },
+ "sandbox/game.py": {
+  "release_path": "code/briefing/v8_sandbox/sandbox/game.py",
+  "sha256": "ff4d495d349819b36254892bbbabb6bc6beac89f2f0d77f898972b013c9ea8cf"
+ },
+ "sandbox/prompt_v2.py": {
+  "release_path": "code/briefing/v8_sandbox/sandbox/prompt_v2.py",
+  "sha256": "795c27855a0116286cc34e49d1687b859ff75eb5880f6c40ea1b2ca8e43e2f96"
+ },
+ "sandbox/env.py": {
+  "release_path": "code/briefing/v8_sandbox/sandbox/env.py",
+  "sha256": "6ec7c8db3e66b28df50c2f15bb8bd84b5efa937c8edb6732fb32b183f0c5288a"
+ },
+ "v8lib/__init__.py": {
+  "release_path": "code/briefing/v8_lib/v8lib/__init__.py",
+  "sha256": "8c268235938b868bdfd9d604313ca0c0d09971a4d0d577242cc9d768146b7ed2"
+ },
+ "v8lib/context.py": {
+  "release_path": "code/briefing/v8_lib/v8lib/context.py",
+  "sha256": "22c2e56302fa596449333ed3950744a6cfd3cb8de0c9374e8ca010880de26b50"
+ },
+ "v8lib/encoders.py": {
+  "release_path": "code/briefing/v8_lib/v8lib/encoders.py",
+  "sha256": "8e7336f1c85422bb56916fce119ab73f47271442e96db9fbedf0674b00c6b136"
+ },
+ "fcr_sym/sym_composer.py": {
+  "release_path": "code/briefing/fcr_sym/sym_composer.py",
+  "sha256": "4c1553e41b6b2b0181a2ec8ea0e28481d6bffd60c105700067d517c7ed19044e"
+ }
+}

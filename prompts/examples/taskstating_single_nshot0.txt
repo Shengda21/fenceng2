@@ -1,0 +1,37 @@
+Prompt example (verbatim record, not re-rendered)
+Domain: briefing (task-stating prompt)
+Cell: sandbox-traits-M18-K10-sharp0.8-noise0-react-briefing-sameword
+Arm file: data/briefing/task_prompt/all/sandbox-traits-M18-K10-sharp0.8-noise0-react-briefing-sameword/llm__gpt-oss-120b__single__nshot0__v2.jsonl.gz
+Record: first line of the file (episode 0, first decision); {"attempts": 1, "episode": 0, "fallback": false, "n_examples": 0, "parse_rule": "final", "pool_order": "fixed", "seed": 0}
+Hidden opponent type of this episode (not shown to the model): ROCK-copy_last-flip
+Generation settings as recorded: {"extra_body": {"reasoning_effort": "low"}, "max_tokens": 1024, "temperature": 0.5}
+System instruction (system message stored in the record (provenance extra system_prompt); built by code/briefing/v8_sandbox/sandbox/prompt_v2.py):
+Reply with 'Final: ' followed by exactly one strategy name from the pool.
+
+=== USER PROMPT (verbatim) ===
+You are playing repeated rock-paper-scissors against one opponent for 30 rounds. Rounds 1-5 are played with ROCK, the default strategy; you now choose one strategy from your pool, and it plays rounds 6-30 for you.
+Each round, rock beats scissors, scissors beats paper and paper beats rock; you score +1 for a win, -1 for a loss and 0 for a draw.
+Your objective is to maximise your total payoff against this opponent.
+
+Your pool (the strategies you can play; each line describes your own throws):
+- ROCK: you throw rock every round.
+- PAPER: you throw paper every round.
+- SCISSORS: you throw scissors every round.
+- OUTPACE: each round you throw whatever beats the throw that beats your own previous throw.
+- MIRROR_BEAT: each round you throw whatever beats your own previous throw.
+- LAG_R: you throw paper every round until the halfway point of the match, then scissors every round for the rest.
+- LAG_P: you throw scissors every round until the halfway point of the match, then rock every round for the rest.
+- LAG_S: you throw rock every round until the halfway point of the match, then paper every round for the rest.
+- SWITCH_OM: until the halfway point of the match, each round you throw whatever beats the throw that beats your own previous throw; after that, each round you throw whatever beats your own previous throw.
+- SWITCH_MO: until the halfway point of the match, each round you throw whatever beats your own previous throw; after that, each round you throw whatever beats the throw that beats your own previous throw.
+If you return no valid strategy name, ROCK is played in rounds 6-30 too.
+
+The opponent you face now:
+Opponent: The opponent likes to throw rock. From the second round on, it usually repeats the throw you made in the previous round, and otherwise falls back on its favourite. After the halfway point it no longer repeats your previous move; it plays what beats your previous move instead.
+Best strategy for you: ?
+
+Reply with 'Final: ' followed by exactly one strategy name from the pool.
+=== RAW COMPLETION (verbatim) ===
+Final: SWITCH_MO
+=== PARSED STRATEGY ===
+SWITCH_MO

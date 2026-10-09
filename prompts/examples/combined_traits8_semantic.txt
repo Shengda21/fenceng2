@@ -1,0 +1,35 @@
+Prompt example (verbatim record, not re-rendered)
+Domain: combined
+Cell: combined-traits8-semantic
+Arm file: data/llm_calls/combined/combined-traits8-semantic/llm__gpt-oss-120b__single__nshot0.jsonl.gz
+Record: first line of the file (episode 0, first decision); {"attempt": 1, "episode_index": 0, "fallback": false}
+Generation settings as recorded: {"extra_body": {"reasoning_effort": "low"}, "max_tokens": 256, "temperature": 0.5}
+System instruction (system instruction derived from code/briefing/v8_lib/v8lib/arms/llm.py (LLMSelector._messages); the system message itself is not stored in the call record):
+Return exactly one strategy name from the pool.
+
+=== USER PROMPT (verbatim) ===
+
+You control the RED team in MAgent combined_arms with melee and ranged units.
+Over the first 20 steps the enemy has been holding its distance; its melee units have barely moved forward (advance fraction 0.10); we have seen little ranged fire and its ranged units rarely step back. Centroid distance is 9.2; enemy melee/ranged mean distances are 7.7/8.8.
+Possible enemy behavior descriptions:
+- Pattern A: push movement with ranged standoff behavior and melee first focus
+- Pattern B: push movement with ranged standoff behavior and ranged first focus
+- Pattern C: push movement with ranged screen behavior and melee first focus
+- Pattern D: push movement with ranged screen behavior and ranged first focus
+- Pattern E: hold movement with ranged standoff behavior and melee first focus
+- Pattern F: hold movement with ranged standoff behavior and ranged first focus
+- Pattern G: hold movement with ranged screen behavior and melee first focus
+- Pattern H: hold movement with ranged screen behavior and ranged first focus
+Available RED strategies:
+- ALL_ATTACK: every unit closes on the enemy formation and attacks whatever is adjacent or in range
+- HOLD_LINE: melee units hold a line in front, ranged units stay behind them and fire at anything within range; nobody advances
+- RANGED_FIRST: all units advance and prioritise the enemy's ranged units as targets
+- MELEE_FIRST: all units advance and prioritise the enemy's melee units as targets
+- SCREEN_KITE: melee units form a screen while ranged units fire and step back to keep their distance
+- FLANK_RANGED: ranged units swing to the sides to shoot past the enemy's melee line while melee units screen
+Default strategy: HOLD_LINE
+Return exactly one available RED strategy name.
+=== RAW COMPLETION (verbatim) ===
+ALL_ATTACK
+=== PARSED STRATEGY ===
+ALL_ATTACK

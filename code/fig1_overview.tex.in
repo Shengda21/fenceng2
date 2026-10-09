@@ -1,0 +1,140 @@
+\begin{tikzpicture}[
+  font=\sffamily\scriptsize, x=1cm, y=1cm,
+  >={Stealth[length=1.7mm,width=1.3mm]},
+  box/.style={rounded corners=2pt, draw, line width=0.6pt, align=center, inner sep=2pt, minimum height=0.56cm, minimum width=3.5cm},
+  chip/.style={rounded corners=1.5pt, draw=black!55, line width=0.5pt, fill=white, inner sep=1.5pt, minimum height=0.42cm, minimum width=0.98cm, align=center},
+  wire/.style={->, line width=0.7pt, draw=black!70},
+  lbl/.style={font=\sffamily\scriptsize, text=black!75},
+  ptitle/.style={anchor=west, inner sep=0pt, font=\sffamily\footnotesize},
+  badge/.style={rounded corners=1.5pt, draw=black!80, line width=0.5pt, fill=white, inner sep=1.8pt, font=\sffamily\bfseries\scriptsize},
+  ceil/.style={dash pattern=on 2.6pt off 1.8pt, draw=black!65, line width=0.7pt},
+  hatchfill/.style={pattern=north east lines, pattern color=black!45, draw=black!45, line width=0.4pt},
+  count/.style={anchor=base, inner sep=0pt, font=\sffamily\bfseries\scriptsize},
+  ofn/.style={anchor=base, inner sep=0pt, font=\sffamily\scriptsize, text=black!75},
+% glyph pics: begin
+  gl size/.store in=\glsize, gl size=2.5mm,
+  gl ink/.style={line width=0.45pt, draw=black!80, line cap=round, line join=round},
+  gl dot/.style={gl ink, fill=black!80},
+  pics/gl-battle/.style={code={\begin{scope}[shift={(-0.5*\glsize,-0.5*\glsize)}, scale=\glsize/10pt]\draw[gl ink] svg {M 1.6 8.4 L 8.4 8.4 L 8.4 5.2 C 8.4 2.9 6.5 1.4 5.0 0.6 C 3.5 1.4 1.6 2.9 1.6 5.2 Z}; \draw[gl ink] svg {M 4.35 3 L 4.35 8 L 5 9.8 L 5.65 8 L 5.65 3}; \draw[gl ink] svg {M 3.1 3 L 6.9 3}; \draw[gl ink] svg {M 5 3 L 5 1.3};\end{scope}}},
+  pics/gl-combined/.style={code={\begin{scope}[shift={(-0.5*\glsize,-0.5*\glsize)}, scale=\glsize/10pt]\draw[gl ink] svg {M 1.7 1.7 L 8.6 8.6}; \draw[gl ink] svg {M 1.6 4.2 L 4.2 1.6}; \draw[gl ink] svg {M 8.4 1.6 L 1.7 8.3}; \draw[gl ink] svg {M 1.5 5.7 L 1.5 8.5 L 4.3 8.5};\end{scope}}},
+  pics/gl-rps/.style={code={\begin{scope}[shift={(-0.5*\glsize,-0.5*\glsize)}, scale=\glsize/10pt]\draw[gl dot] svg {M 2.85 5 C 2.85 5.75 2.25 6.35 1.5 6.35 C 0.75 6.35 0.15 5.75 0.15 5 C 0.15 4.25 0.75 3.65 1.5 3.65 C 2.25 3.65 2.85 4.25 2.85 5 Z}; \draw[gl ink] svg {M 3.7 3.7 L 6.3 3.7 L 6.3 6.3 L 3.7 6.3 Z}; \draw[gl ink] svg {M 7.5 6.4 L 8.5 3.6 L 9.5 6.4};\end{scope}}},
+  pics/gl-bubble/.style={code={\begin{scope}[shift={(-0.5*\glsize,-0.5*\glsize)}, scale=\glsize/10pt]\draw[gl ink] svg {M 2.6 3.0 L 2.1 0.8 L 4.7 3.0 L 7.5 3.0 C 8.33 3.0 9.0 3.67 9.0 4.5 L 9.0 7.6 C 9.0 8.43 8.33 9.1 7.5 9.1 L 2.5 9.1 C 1.67 9.1 1.0 8.43 1.0 7.6 L 1.0 4.5 C 1.0 3.67 1.67 3.0 2.5 3.0 Z}; \draw[gl ink] svg {M 2.8 7.3 L 7.2 7.3}; \draw[gl ink] svg {M 2.8 5 L 6 5};\end{scope}}},
+  pics/gl-eye/.style={code={\begin{scope}[shift={(-0.5*\glsize,-0.5*\glsize)}, scale=\glsize/10pt]\draw[gl ink] svg {M 0.5 5.0 C 2.6 8.5 7.4 8.5 9.5 5.0 C 7.4 1.5 2.6 1.5 0.5 5.0 Z}; \draw[gl dot] svg {M 6.3 5 C 6.3 5.72 5.72 6.3 5 6.3 C 4.28 6.3 3.7 5.72 3.7 5 C 3.7 4.28 4.28 3.7 5 3.7 C 5.72 3.7 6.3 4.28 6.3 5 Z};\end{scope}}},
+  pics/gl-known/.style={code={\begin{scope}[shift={(-0.5*\glsize,-0.5*\glsize)}, scale=\glsize/10pt]\draw[gl ink] svg {M 5.65 7 C 5.65 7.97 4.87 8.75 3.9 8.75 C 2.93 8.75 2.15 7.97 2.15 7 C 2.15 6.03 2.93 5.25 3.9 5.25 C 4.87 5.25 5.65 6.03 5.65 7 Z}; \draw[gl ink] svg {M 0.6 1.0 C 0.6 3.7 2.0 4.7 3.9 4.7 C 5.8 4.7 7.2 3.7 7.2 1.0}; \draw[gl ink] svg {M 6.6 6.5 L 7.7 5.2 L 9.7 8};\end{scope}}},
+  pics/gl-new/.style={code={\begin{scope}[shift={(-0.5*\glsize,-0.5*\glsize)}, scale=\glsize/10pt]\draw[gl ink] svg {M 5.65 7 C 5.65 7.97 4.87 8.75 3.9 8.75 C 2.93 8.75 2.15 7.97 2.15 7 C 2.15 6.03 2.93 5.25 3.9 5.25 C 4.87 5.25 5.65 6.03 5.65 7 Z}; \draw[gl ink] svg {M 0.6 1.0 C 0.6 3.7 2.0 4.7 3.9 4.7 C 5.8 4.7 7.2 3.7 7.2 1.0}; \draw[gl ink] svg {M 8.3 5.1 L 8.3 8.9}; \draw[gl ink] svg {M 6.4 7 L 10 7};\end{scope}}},
+  pics/gl-chip/.style={code={\begin{scope}[shift={(-0.5*\glsize,-0.5*\glsize)}, scale=\glsize/10pt]\draw[gl ink] svg {M 2.6 2.6 L 7.4 2.6 L 7.4 7.4 L 2.6 7.4 Z}; \draw[gl ink] svg {M 0.7 3.7 L 2.6 3.7}; \draw[gl ink] svg {M 0.7 5 L 2.6 5}; \draw[gl ink] svg {M 0.7 6.3 L 2.6 6.3}; \draw[gl ink] svg {M 7.4 3.7 L 9.3 3.7}; \draw[gl ink] svg {M 7.4 5 L 9.3 5}; \draw[gl ink] svg {M 7.4 6.3 L 9.3 6.3};\end{scope}}},
+  pics/gl-lever/.style={code={\begin{scope}[shift={(-0.5*\glsize,-0.5*\glsize)}, scale=\glsize/10pt]\draw[gl ink] svg {M 0.8 1 L 6.4 1 L 6.4 7.6 L 0.8 7.6 Z}; \draw[gl ink] svg {M 2 3.4 L 5.2 3.4 L 5.2 5.6 L 2 5.6 Z}; \draw[gl ink] svg {M 6.4 3 L 8.6 3 L 8.6 7.6}; \draw[gl dot] svg {M 9.55 8.5 C 9.55 9.02 9.12 9.45 8.6 9.45 C 8.08 9.45 7.65 9.02 7.65 8.5 C 7.65 7.98 8.08 7.55 8.6 7.55 C 9.12 7.55 9.55 7.98 9.55 8.5 Z};\end{scope}}},
+  pics/gl-pin/.style={code={\begin{scope}[shift={(-0.5*\glsize,-0.5*\glsize)}, scale=\glsize/10pt]\draw[gl ink] svg {M 7.3 7 C 7.3 8.27 6.27 9.3 5 9.3 C 3.73 9.3 2.7 8.27 2.7 7 C 2.7 5.73 3.73 4.7 5 4.7 C 6.27 4.7 7.3 5.73 7.3 7 Z}; \draw[gl ink] svg {M 3.2 4.4 L 6.8 4.4}; \draw[gl ink] svg {M 5 4.4 L 5 0.5};\end{scope}}},
+% glyph pics: end
+]
+% ------------------------------------------------------------------ panel a
+\node[ptitle] at (0,5.35) {\textbf{a}\hspace{4pt}The practice: a model in the slot};
+% the two inputs, each led by its glyph: a speech bubble for the briefing, an eye for the observation
+\node[box, fill=ogobs, draw=ogobsb, dashed, minimum width=1.62cm, align=left, font=\sffamily\fontsize{7}{7.9}\selectfont] (b) at (0.78,4.62) {\hspace*{3.1mm}Scouting\\\hspace*{3.1mm}briefing\\\hspace*{3.1mm}in words};
+\node[box, fill=ogobs, draw=ogobsb, minimum width=2.02cm, align=left, font=\sffamily\fontsize{7}{7.9}\selectfont] (o) at (2.91,4.62) {\hspace*{3.1mm}Observation\\\hspace*{3.1mm}$o$ of other\\\hspace*{3.1mm}agents};
+\pic at ([xshift=1.9mm]b.west) {gl-bubble};
+\pic at ([xshift=1.9mm]o.west) {gl-eye};
+\node[box, fill=ogrouter, draw=ogrouterb, line width=1.0pt, minimum height=1.4cm] (r) at (2.0,3.05) {};
+\node[anchor=north, inner sep=2.5pt] at (r.north) {\textbf{selector slot}};
+\node[chip] (c1) at (0.85,2.8) {fixed $\tau$};
+\node[chip] (c2) at (2.0,2.8) {learner};
+\node[chip, draw=ogrouterb, fill=ogrouterb, text=white] (c3) at (3.15,2.8) {\textbf{LLM}};
+% what fills the slot: a pinned strategy, a bandit's lever, a language model's chip
+\pic at (0.85,3.21) {gl-pin};
+\pic at (2.0,3.21) {gl-lever};
+\pic at (3.15,3.21) {gl-chip};
+\node[box, fill=ogpool, draw=ogpoolb] (p) at (2.0,1.75) {Strategy pool $\mathcal{T}_D$\\finite, typed};
+\node[box, fill=ogsolver, draw=ogsolverb] (s) at (2.0,0.9) {Executor, I1--I4};
+\node[box, fill=ogobs, draw=ogobsb] (e) at (2.0,0.1) {Environment step};
+\draw[wire] (b.south) -- (b.south |- r.north);
+\draw[wire] (o.south) -- (o.south |- r.north) node[midway,right=1pt,lbl]{$\mathrm{enc}(o)$};
+\draw[wire] (r)--(p) node[midway,right=1pt,lbl]{$\tau$};
+\draw[wire] (p)--(s) node[midway,right=1pt,lbl]{$(\tau,o)$};
+\draw[wire] (s)--(e) node[midway,right=1pt,lbl]{$a$};
+\draw[wire] (e.east) -- ++(0.45,0) |- (o.east);
+\node[lbl, rotate=90] at (4.5,2.55) {type $\theta$ drawn per episode, unobserved};
+% ------------------------------------------------------------------ panel b
+\begin{scope}[xshift=-0.35cm]
+\node[ptitle] at (5.2,5.35) {\textbf{b}\hspace{4pt}What caps any selector, model or not};
+\node[rounded corners=2pt, fill=black!5, draw=black!25, line width=0.4pt, inner sep=3pt, font=\sffamily\small] at (8.15,4.65)
+  {$V_D(\Pi)-\Vstar=\,{\color{ogheadroom}\HD}\,-\,\mathbb{E}[\rho]$};
+% three bars, 0.62 wide with gaps of 0.85: a model that reads the type and a cheap selector that reads it both
+% reach the ceiling but for a small regret; a selector that misreads it ends below the best fixed strategy. The
+% headroom arrow stands right of the bars, beside the labels of the two lines it spans.
+\begin{scope}[yscale=0.8, yshift=-0.55cm]
+\draw[->, line width=0.6pt, black!70] (5.75,0.95) -- (5.75,4.85);
+\draw[line width=0.5pt, black!60] (5.75,0.95) -- (9.9,0.95);
+\draw[line width=0.6pt, black!55] (5.75,2.5) -- (9.9,2.5);
+\draw[ceil] (5.75,4.15) -- (9.9,4.15);
+\draw[<->, line width=0.9pt, draw=ogheadroom] (9.72,2.5) -- (9.72,4.15);
+\filldraw[fill=black!22, draw=black!70, line width=0.5pt] (5.95,0.95) rectangle (6.57,3.75);
+\filldraw[hatchfill] (5.95,3.75) rectangle (6.57,4.15);
+\filldraw[fill=black!22, draw=black!70, line width=0.5pt] (7.42,0.95) rectangle (8.04,3.75);
+\filldraw[hatchfill] (7.42,3.75) rectangle (8.04,4.15);
+\filldraw[fill=black!22, draw=black!70, line width=0.5pt] (8.89,0.95) rectangle (9.51,1.85);
+\filldraw[hatchfill] (8.89,1.85) rectangle (9.51,4.15);
+\draw[white, line width=2.6pt] (6.21,2.5) -- (6.21,3.75);
+\draw[{Circle[length=2.2pt]}-{Stealth[length=4.2pt,width=4pt]}, line width=1pt, black] (6.21,2.5) -- (6.21,3.75);
+\draw[white, line width=2.6pt] (7.68,2.5) -- (7.68,3.75);
+\draw[{Circle[length=2.2pt]}-{Stealth[length=4.2pt,width=4pt]}, line width=1pt, black] (7.68,2.5) -- (7.68,3.75);
+\draw[white, line width=2.6pt] (9.15,2.5) -- (9.15,1.85);
+\draw[{Circle[length=2.2pt]}-{Stealth[length=4.2pt,width=4pt]}, line width=1pt, black] (9.15,2.5) -- (9.15,1.85);
+\end{scope}
+\node[lbl, rotate=90] at (5.45,2.2) {episodic reward};
+\node[anchor=west, align=left, inner sep=1pt] at (9.95,3.38) {ceiling\\$\Vstar{+}{\color{ogheadroom}\HD}$};
+\node[anchor=west, align=left, inner sep=1pt] at (9.95,1.92) {best fixed\\strategy $\Vstar$};
+\node[anchor=west, text=ogheadroom, inner sep=1pt] at (9.83,2.55) {$\HD$};
+\node[anchor=west, inner sep=0.5pt, font=\sffamily\small\bfseries] at (6.27,2.06) {$\pmb{+}$};
+\node[anchor=west, inner sep=0.5pt, font=\sffamily\small\bfseries] at (7.74,2.06) {$\pmb{+}$};
+\node[anchor=west, inner sep=0.5pt, fill=white, font=\sffamily\small\bfseries] at (9.19,1.3) {$\pmb{-}$};
+\node[align=center, lbl, anchor=north] at (6.26,0.16) {model\\reads};
+\node[align=center, lbl, anchor=north] at (7.73,0.16) {cheap selector\\reads};
+\node[align=center, lbl, anchor=north] at (9.2,0.16) {\vphantom{model}\\misreads};
+\draw[hatchfill] (5.75,-0.88) rectangle (6.05,-0.65);
+\node[anchor=west, lbl, inner sep=1pt] at (6.1,-0.765) {regret $\mathbb{E}[\rho]$};
+\draw[{Circle[length=2.2pt]}-{Stealth[length=4.2pt,width=4pt]}, line width=1pt, black] (7.95,-0.92) -- (7.95,-0.6);
+\node[anchor=west, lbl, inner sep=1pt] at (8.08,-0.765) {margin: from $\Vstar$ to the bar top};
+\end{scope}
+% ------------------------------------------------------------------ panel c
+\node[ptitle] at (10.92,5.35) {\textbf{c}\hspace{4pt}The diagnostic: mechanism and prediction};
+% the funnel: three stages on one axis, each 3 mm narrower per side than the one above, read top down; a stage that
+% fails exits to the right
+\begin{scope}[
+  stage/.style={rounded corners=2pt, draw=black!70, fill=white, line width=0.6pt, minimum height=0.74cm, inner sep=0pt},
+  exitbox/.style={rounded corners=2pt, draw=black!30, fill=black!4, line width=0.4pt, text=black!60, align=center,
+    font=\sffamily\fontsize{7}{7.8}\selectfont, minimum width=1.80cm, minimum height=0.62cm, inner sep=1.5pt},
+  exitwire/.style={->, line width=0.6pt, draw=black!40},
+  qtext/.style={anchor=north west, inner sep=0pt, text=black!75, font=\sffamily\fontsize{7}{7.8}\selectfont}]
+\foreach \y/\bwid/\tag/\name/\q/\ex in {
+  4.78/4.82/C1/Headroom/{Is there something to read?}/{use the best\\fixed strategy},
+  3.76/4.22/C2/Legibility/{Does the model read it?}/{this model is\\not useful here},
+  2.74/3.62/C3/Comparative advantage/{Is it ahead of cheaper readers?}/{use the cheaper\\selector}}{
+  \node[stage, minimum width=\bwid cm] (s\tag) at (13.33,\y) {};
+  \node[badge, anchor=north west] at ([xshift=1.3mm,yshift=-1.0mm]s\tag.north west) {\tag};
+  \node[anchor=west, inner sep=0pt] at ([xshift=7.2mm,yshift=-2.75mm]s\tag.north west) {\textbf{\name}};
+  \node[qtext] at ([xshift=1.3mm,yshift=-5.0mm]s\tag.north west) {\q};
+  \node[exitbox] (x\tag) at (17.02,\y) {\ex};
+  \draw[exitwire] (s\tag.east) -- (x\tag.west) node[midway, above=0.3pt, lbl, text=black!55] {no};
+}
+\node[rounded corners=2pt, draw=ogrouterb, fill=ogrouterb, text=white, line width=0.6pt, minimum width=2.6cm,
+  minimum height=0.44cm, inner sep=1pt, font=\sffamily\bfseries\scriptsize] (pay) at (13.33,1.89) {the LLM can pay};
+\draw[wire] (sC1.south) -- (sC2.north) node[midway, right=1pt, lbl] {yes};
+\draw[wire] (sC2.south) -- (sC3.north) node[midway, right=1pt, lbl] {yes};
+\draw[wire] (sC3.south) -- (pay.north) node[midway, right=1pt, lbl] {yes};
+\end{scope}
+% the three tested regimes, in a box of their own below a gap and under a heading; glyphs: the games of the
+% first-moves cells, the briefing, known or new agents
+\node[anchor=north west, rounded corners=2pt, fill=black!5, draw=black!25, line width=0.4pt, minimum width=6.47cm,
+  minimum height=2.27cm, inner sep=0pt] at (11.45,1.45) {};
+\node[anchor=north west, inner sep=0pt, text=black!65, font=\sffamily\itshape\fontsize{7}{7.8}\selectfont]
+  at (11.63,1.36) {Predicted gate and where the tested regimes land};
+\begin{scope}[rg/.style={anchor=north west, inner sep=0pt, text width=5.4cm, align=left,
+  font=\sffamily\fontsize{7}{7.8}\selectfont, execute at begin node={\hyphenpenalty=10000\relax}}, gl size=2.3mm]
+\node[rg] at (12.37,1.02) {\textbf{First moves:} C2 closes in battle, C3 elsewhere $\rightarrow$ no LLM win};
+\pic at (11.63,0.89) {gl-battle}; \pic at (11.89,0.89) {gl-combined}; \pic at (12.15,0.89) {gl-rps};
+\node[rg] at (12.37,0.40) {\textbf{Briefing, mostly known:} C3 closes $\rightarrow$ a cheap text reader suffices};
+\pic at (11.63,0.27) {gl-bubble}; \pic at (11.89,0.27) {gl-known};
+\node[rg] at (12.37,-0.22) {\textbf{Briefing, held-out compositions:} C3 sometimes stays open $\rightarrow$ an LLM can pay};
+\pic at (11.63,-0.35) {gl-bubble}; \pic at (11.89,-0.35) {gl-new};
+\end{scope}
+\end{tikzpicture}

@@ -1,0 +1,11 @@
+# Rerunning the typed MAgent and sandbox arms (Linux x86-64, Python 3.12).
+# With these versions the released code reproduces all 5,200 recorded episodes of the 52 re-run MAgent arms bit for bit.
+magent2==0.3.4
+pettingzoo==1.27.0
+numpy==2.5.3
+scipy
+scikit-learn
+gymnasium
+pyyaml
+openai
+torch  # CPU build suffices; only the PPO scheduler uses it

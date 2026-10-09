@@ -1,0 +1,31 @@
+Prompt example (verbatim record, not re-rendered)
+Domain: combined
+Cell: combined-base4-swapdesc
+Arm file: data/llm_calls/combined/combined-base4-swapdesc/llm__gpt-oss-120b__single__nshot-0.jsonl.gz
+Record: first line of the file (episode 0, first decision); {"attempt": 1, "episode_index": 0, "fallback": false}
+Generation settings as recorded: {"extra_body": {"reasoning_effort": "low"}, "max_tokens": 256, "temperature": 0.5}
+System instruction (system instruction derived from code/briefing/v8_lib/v8lib/arms/llm.py (LLMSelector._messages); the system message itself is not stored in the call record):
+Return exactly one option label from the pool.
+
+=== USER PROMPT (verbatim) ===
+
+You control the RED team in MAgent combined_arms with melee and ranged units.
+Over the first 20 steps the enemy has been closing on our line; its melee units have barely moved forward (advance fraction 0.10); we have seen little ranged fire and its ranged units rarely step back. Centroid distance is 6.1; enemy melee/ranged mean distances are 7.7/1.8.
+Possible enemy behavior descriptions:
+- Pattern A: isolated melee-first pressure with ranged units anchored behind the charge
+- Pattern B: ranged standoff fire behind a melee screen
+- Pattern C: coordinated whole-force advance with ranged units firing at range two
+- Pattern D: ranged fire-and-step-back pressure behind a melee screen
+Available RED strategies:
+- OPTION_A: all units advance and prioritise the enemy's melee units as targets
+- OPTION_B: all units advance and prioritise the enemy's ranged units as targets
+- OPTION_C: ranged units swing to the sides to shoot past the enemy's melee line while melee units screen
+- OPTION_D: melee units form a screen while ranged units fire and step back to keep their distance
+- OPTION_E: every unit closes on the enemy formation and attacks whatever is adjacent or in range
+- OPTION_F: melee units hold a line in front, ranged units stay behind them and fire at anything within range; nobody advances
+Default strategy: OPTION_B
+Return exactly one available RED strategy name.
+=== RAW COMPLETION (verbatim) ===
+OPTION_A
+=== PARSED STRATEGY ===
+ALL_ATTACK

@@ -1,0 +1,19 @@
+Prompt example (verbatim record, not re-rendered)
+Domain: sandbox
+Cell: sandbox-M3-K3-sharp0.6-noise0-relabel
+Arm file: data/llm_calls/sandbox/sandbox-M3-K3-sharp0.6-noise0-relabel/llm__gpt-oss-120b__single__nshot-0.jsonl.gz
+Record: first line of the file (episode 0, first decision); {"attempt": 1, "episode_index": 0, "fallback": false}
+Generation settings as recorded: {"extra_body": {"reasoning_effort": "low"}, "max_tokens": 256, "temperature": 0.5}
+System instruction (system instruction derived from code/briefing/v8_lib/v8lib/arms/llm.py (LLMSelector._messages); the system message itself is not stored in the call record):
+Return exactly one option label from the pool.
+
+=== USER PROMPT (verbatim) ===
+So far the opponent has thrown rock 1 times, paper 0 times, scissors 4 times. It copied your previous move 0% of the time and best-responded 0% of the time.
+Pool: - OPTION_A: always throw rock
+- OPTION_B: always throw paper
+- OPTION_C: always throw scissors
+Default: OPTION_A
+=== RAW COMPLETION (verbatim) ===
+OPTION_A
+=== PARSED STRATEGY ===
+ROCK
